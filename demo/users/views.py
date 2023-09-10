@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.template import loader
 from .models import User
+from rest_framework import routers, serializers, viewsets
 
 def users(request):
     myusers = User.objects.all().values()
@@ -18,3 +19,14 @@ def details(request, id):
         'myuser': myuser,
     }
     return HttpResponse(template.render(context, request))
+
+# Serializers define the API representation.
+class UserSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = User
+        fields = ['email', 'username', 'password']
+
+
+class UserViewSet(viewsets.ModelViewSet):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
