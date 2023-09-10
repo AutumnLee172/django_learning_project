@@ -6,3 +6,6 @@ class User(models.Model):
   password = models.CharField(max_length=255)
   created_date = models.DateTimeField(null=True, blank=True)
 # Create your models here.
+
+def __str__(self):
+    return f"{self.email} {self.username}"
